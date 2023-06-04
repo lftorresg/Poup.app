@@ -25,25 +25,30 @@ Nesta tela, é possível adicionar despesas, editar ou excluí-las.
 
 ## Estrutura de Pastas
 
-- `App.jsx`: arquivo principal do projeto.
+- `client`: Pasta com os arquivos principais do App.
+   - `App.jsx`: arquivo principal do projeto.
 
-- `assets`: arquivos de imagem utilizados ao longo do projeto.
+   - `assets`: arquivos de imagem utilizados ao longo do projeto.
 
-- `android`: exportações das bibliotecas do projeto.
+   - `android`: exportações das bibliotecas do projeto.
 
-- `.expo`: arquivos do "Expo Go", app utilizado para rodar os códigos de React.
+   - `.expo`: arquivos do "Expo Go", app utilizado para rodar os códigos de React.
 
-- `node_modules`: módulos do Node.js.
+   - `node_modules`: módulos do Node.js.
 
-- `src`: onde se encontram os principais códigos do projeto.
+   - `src`: onde se encontram os principais códigos do projeto.
    
-   - `routes`: pasta definindo as rotas do projeto que são as páginas transitáveis.
+      - `routes`: pasta definindo as rotas do projeto que são as páginas transitáveis.
    
-   - `pages`: onde se encontram todas as páginas do projeto.
-        - `cadastro`: pasta com o código da página de cadastro.
-        - `login`: pasta com o código da página de login.
-        - `Inicio`: pasta com o código da página inicial.
-        - `home`: pasta com o código da página home.
+      - `pages`: onde se encontram todas as páginas do projeto.
+         - `cadastro`: pasta com o código da página de cadastro.
+         - `login`: pasta com o código da página de login.
+         - `Inicio`: pasta com o código da página inicial.
+         - `home`: pasta com o código da página home.
+
+- `server`: Pasta com os arquivos principais do servidor de banco de dados do App.
+   - `node_modules`: módulos do Node.js.
+   - `data`: onde se encontra o arquivo com dados da conexão com o BD e intruções CRUD.
 
 ## Tecnologias Utilizadas
 
