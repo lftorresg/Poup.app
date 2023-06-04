@@ -29,7 +29,6 @@ app.post("/expense", (req, res) => {
 });
 
 // READ
-
 app.get("/expense", (req, res) => {
 
     let SQL = "SELECT * from listadespesas";
