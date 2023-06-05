@@ -12,6 +12,7 @@ export default function Home() {
     const [editItemId, setEditItemId] = useState(null);
     const [editedDescription, setEditedDescription] = useState('');
     const [editedValue, setEditedValue] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const [serverData, setServerData] = useState([]);
 
     useEffect(() => {
@@ -45,24 +46,35 @@ export default function Home() {
     // CREATE
     const handleAddItem = () => {
         // Adiciona um item
+        setIsLoading(true);
         setData(prevState => [
             ...prevState,
-            { id: new Date().getTime().toString(), items: newDescription, amount: Number(newValue) },
+            { items: newDescription, amount: Number(newValue) },
         ]);
         setNewDescription('');
         setNewValue('');
 
-        Axios.post("http://192.168.1.64:3001/expense", { amount: newValue, expense: newDescription })
+        Axios.post("http://192.168.1.64:3001/expense", { amount: newValue, expense: newDescription }).then(() => {
+            setIsLoading(false);
+        })
     };
 
-    const handleDeleteItem = id => {
-        // Deleta o item
-        setData(prevState => prevState.filter(item => item.id !== id));
-        Axios.delete(`http://192.168.1.64:3001/expense/${id}`,)
-    };
+    // READ
+    useEffect(() => {
+        // Busca os dados do servidor
+        Axios.get("http://192.168.1.64:3001/expense")
+        .then(response => {
+            setData(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, [data]);
 
+    // UPDATE
     const handleEditItem = (id, newDescription, newValue) => {
         // Atualiza o estado dos itens
+        setIsLoading(true);
         setData(prevState => {
             return prevState.map(item => {
                 if (item.id === id) {
@@ -73,20 +85,24 @@ export default function Home() {
         });
         setEditItemId(null);
 
+        Axios.put(`http://192.168.1.64:3001/expense/${id}`,).then(() => {
+            setIsLoading(false);
+        }).catch(err => {
+            console.log(err);
+        });
+    };
+    // DELETE
+    const handleDeleteItem = id => {
+        // Deleta o item
+        setIsLoading(true);
+        setData(prevState => prevState.filter(item => item.id !== id));
+        Axios.delete(`http://192.168.1.64:3001/expense/${id}`,).then(() => {
+            setIsLoading(false);
+        }).catch(err => {
+            console.log(err);
+        });
     };
 
-    // READ
-    useEffect(() => {
-        // Busca os dados do servidor
-        Axios.get("http://192.168.1.64:3001/expense")
-            .then(response => {
-                setData(response.data);
-                console.log(JSON.stringify(response.data,2,null));
-            })           
-            .catch(error => {
-                console.log(error);
-            });
-    }, []);
 
     function formatCurrency(value) {
         // Deixa os números na moeda local
@@ -97,7 +113,6 @@ export default function Home() {
     }
 
     const renderItem = ({ item }) => {
-        console.log(item);
         const { id, items, amount } = item;
         return (
             <View style={styles.itemContainer}>
@@ -181,12 +196,19 @@ export default function Home() {
                     <Text>Adicionar</Text>
                 </TouchableOpacity>
             </View>
-            <FlatList
-                data={data}
-                keyExtractor={item => item.id}
-                renderItem={renderItem}
-                style={styles.list}
-            />
+            {isLoading ? (
+                <Text>
+                    Loading
+                </Text>
+            ) :
+                <FlatList
+                    data={data}
+                    keyExtractor={item => item.id}
+                    renderItem={renderItem}
+                    style={styles.list}
+                />
+            }
+
         </LinearGradient>
     );
 }

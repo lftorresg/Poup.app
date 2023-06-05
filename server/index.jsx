@@ -25,6 +25,7 @@ app.post("/expense", (req, res) => {
     
     db.query(SQL, values, (err, result) => {
         console.log(err);
+        res.sendStatus(201);
     })
 });
 
@@ -35,7 +36,22 @@ app.get("/expense", (req, res) => {
     
     db.query(SQL, (err, result) => {
         if(err) console.log(err);
-        else res.send(result);
+        else res.send(result).status(200);
+    })
+});
+
+// UPDATE
+
+app.put("/expense/:id", (req, res) => {
+    
+    const { id } = req.params;
+    const { amount } = req.body;
+
+    let SQL = "UPDATE listadespesas SET items = ?, amount = ? WHERE (`id` = ?);"
+
+    db.query(SQL, amount, id, (err, result) => {
+        if(err) console.log(err);
+        else res.send(result).status(200);
     })
 });
 
@@ -43,12 +59,12 @@ app.get("/expense", (req, res) => {
 app.delete("/expense/:id", (req, res) => {
     
     const { id } = req.params;
-    console.log("Informação: ", id)
 
     let SQL = "DELETE FROM listadespesas WHERE (`id` = ? )";
     
     db.query(SQL, id, (err, result) => {
         console.log(err);
+        res.sendStatus(204);
     })
 });
 
