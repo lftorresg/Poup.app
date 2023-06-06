@@ -48,7 +48,7 @@ Nesta tela, é possível adicionar despesas, editar ou excluí-las.
 
 - `server`: Pasta com os arquivos principais do servidor de banco de dados do App.
    - `node_modules`: módulos do Node.js.
-   - `data`: onde se encontra o arquivo com dados da conexão com o BD e intruções CRUD.
+   - `index.jsx`: onde se encontra o arquivo com dados da conexão com o BD e intruções CRUD.
 
 ## Tecnologias Utilizadas
 
