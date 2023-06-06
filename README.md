@@ -55,6 +55,7 @@ Nesta tela, é possível adicionar despesas, editar ou excluí-las.
 - React Native com JSX
 - IDE: VSCode
 - Java (arquivos de suporte)
+- Conexão com banco de dados MySQL
 
 ## Contribuindo
 
